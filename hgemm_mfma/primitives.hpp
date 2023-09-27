@@ -748,7 +748,12 @@ constexpr void clear(vector_type<T, N> & vec, bool_const<disable_inline_asm> = b
         });
     }
 #else
-    set_buf<T, N, disable_inline_asm>{}(vec);
+    static_assert(0 < N);
+    // set_buf<T, N, disable_inline_asm>{}(vec);
+    constexpr_for<0, N, 1>{}([&](auto i){
+        vec.template to_varray<T>()[i] = static_cast<T>(0);
+        // asm volatile("; POYENC set to 0"::);
+    });
 #endif
 }
 

@@ -558,7 +558,10 @@ struct gemm_pipeline_flat {
         auto sld_a = SLD_A{smem, v_offset_a, 0};
         auto sld_b = SLD_B{smem, v_offset_b, lds_b_offset};
 
+        asm volatile("; POYENC start"::); 
         clear(acc_buf);
+        asm volatile("; POYENC end"::); 
+        sched_barrier();
         gld_fence(gld_b.n_issue);
         sst_a(gld_a.buf);
         gld_fence(0);
@@ -632,7 +635,9 @@ struct gemm_pipeline_flat {
                 sst_iter_a(gld_iter_a.buf);
                 gld_fence(0);
                 sst_iter_b(gld_iter_b.buf);
+                sched_barrier();
                 GLD_BUF_CLEAR{}(gld_iter_a, gld_iter_b);
+                sched_barrier();
             }
             mfma(sld_iter_a.template get<i_m>(), sld_iter_b.template get<i_n % 2>(),
                             acc_buf.template to_varray<acc_t>()[number<i_m * N_REPEAT_ + i_n>{}], bool_const<true>{});

@@ -211,7 +211,7 @@ int main(int argc, char** argv) {
     int H    = 64;    // query heads
     int H_KV = 8;     // key/value heads
     int N    = 1024;  // sequence length
-    int D    = 128;   // head dimension
+    int D    = 256;   // head dimension
 
     // Parse command line arguments. Supports: -n 16384, -n=16384, --seq=16384
     bool causal = true;
@@ -344,9 +344,9 @@ int main(int argc, char** argv) {
 
     int rc;
     if (causal)
-        rc = run(opus_gqa_traits<32, 64, 128, 8, true>{});
+        rc = run(opus_gqa_traits<32, 64, 256, 4, true>{});
     else
-        rc = run(opus_gqa_traits<32, 64, 128, 8, false>{});
+        rc = run(opus_gqa_traits<32, 64, 256, 4, false>{});
     if (rc) return rc;
 
     // Cleanup

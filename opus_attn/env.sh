@@ -1,1 +1,1 @@
-export OPUS_INCLUDE_DIR=/work/aiter/csrc/include
+export OPUS_INCLUDE_DIR=/root/workspace/repo/aiter/csrc/include

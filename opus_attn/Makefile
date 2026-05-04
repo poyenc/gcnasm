@@ -1,8 +1,8 @@
-OPUS_INCLUDE_DIR ?= /home/carhuang/repo/aiter/csrc/include
+OPUS_INCLUDE_DIR ?= /root/workspace/opus_include
 HIPCC           ?= /opt/rocm/bin/hipcc
 ARCH            ?= gfx950
 
-COMMON_FLAGS = -I. -I$(OPUS_INCLUDE_DIR) -std=c++20 -fopenmp -O3 -Wall --offload-arch=$(ARCH) -ffast-math
+COMMON_FLAGS = -I. -I$(OPUS_INCLUDE_DIR) -std=c++20 -fopenmp -O3 -Wall --offload-arch=$(ARCH) -ffast-math --save-temps
 
 BUILD = build
 OUT   = $(BUILD)/gqa_attn.exe
